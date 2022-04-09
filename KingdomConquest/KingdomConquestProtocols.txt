@@ -1,0 +1,113 @@
+Kingdom Conquest Client/Server Protocols
+
+NOTE: All individual keywords in a command and all commands must be delineated or followed by the bar (|) character, respectively.
+
+			-----Sent by server-----
+
+---Set-up---
+
+SERVER_FULL
+	-Informs client the server is running but has no room for new games
+
+REQUEST_USERNAME
+	-Asks client for username
+
+USERNAME_TAKEN
+	-Informs client username is taken by another client
+
+REQUEST_MATCH_TYPE
+	-Asks client for requested game type (random opponent or friend)
+
+WAITING_RANDOM
+	-Informs client that they've been put in a waiting queue for a random opponent
+
+WAITING_FRIEND
+	-Informs client that they've been put in a waiting queue for a friendly opponent
+
+OPPONENT_FOUND
+	-Informs client that an opponent has been found and the game can start
+
+GAME_START
+
+
+---In game---
+
+INITIALIZE|<unitCount>|...<unitType>|<unitLevel>|<unitExperience>|<unitMaxHealth>|<unitStrength>|<unitDexterity>|<unitPhysicalResistance>|<unitMagicResistance>|<unitLuck>|<unitMovementRange>|<unitAttackRange>|...
+	-Informs the receiving client of the sending client's initial unit positions
+	-<unitCount> - The number of units on the sending client's team
+	-<unitType> - 
+	-<unitLevel> - The current level of a given unit
+	-<unitExperience> - The experience points of a given unit
+	-<unitMaxHealth> - The maximum health of a given unit
+	-<unitStrength> - The attack strength of a given unit
+	-<unitDexterity> - The dexterity (speed) of a given unit
+	-<unitPhysicalResistance> - The resistance of a given unit to physical attacks
+	-<unitMagicResistance> - The resistance of a given unit to magic attacks
+	-<unitLuck> - The luck of a given unit
+	-<unitMovementRange> - The movement range of a given unit
+	-<unitAttackRange> - The attack range of a given unit
+
+MOVE|<currentLocation>|<desiredDestination>
+	-Informs the receiving client that a unit is moving on the other client's map
+	-<currentLocation> = X|Y where X and Y are of type "int" - The current location of the moving unit
+	-<desiredDestination> = X|Y where X and Y are of type "int" - The location to which the identified unit is moving
+
+ATTACK|<attackerLocation>|<defenderLocation>|<defenderHPLoss>|<attackerHPLoss>
+	-Informs receiving client that a unit has attacked another unit on the other client's map
+	-<attackerLocation> = X|Y where X and Y are of type "int" - The location of the attacking unit
+	-<defenderLocation> = X|Y where X and Y are of type "int" - The location of the defending unit
+	-<defenderHPLoss> = X where X is of type "int" - The amount by which the defender's HP decreased
+	-<attackerHPLoss> = X where X is of type "int" - The amount by which the attacker's HP decreased
+
+LEVEL_UP|<unitLocation>|<unitHealth>|<unitStrength>|<unitDexterity>|<unitPhysicalResistance>|<unitMagicResistance>|
+	-Informs receiving client that a unit has leveled up on the other client's map
+	-<unitLocation> = X|Y where X and Y are of type "int" - The location of the unit leveling up
+	-<unitHealth> - The max health of the unit after leveling up
+	-<unitStrength> - The attack strength of the unit after leveling up
+	-<unitDexterity> - The dexterity of the unit after leveling up
+	-<unitPhysicalResistance> - The physical resistance of the unit after leveling up
+	-<unitMagicResistance> - The magic resistance of the unit after leveling up
+
+TURN_END
+	-Informs client that the current player's turn has ended
+
+DISCONNECT
+	-Informs the client that the opponent has disconnected from the match
+
+
+			-----Sent by client-----
+
+---Set up---
+
+USERNAME|<username>
+	-Provides server with username
+
+MATCH_TYPE|<type>
+	-Provides server with the requested match type
+	-<type> = RANDOM - User desires no specific opponent
+	-<type> = FRIEND|<username> - User desires a match with user <username>
+
+---In game---
+
+MOVE|<currentLocation>|<desiredDestination>
+	-Informs the receiving client that a unit is moving on the other client's map
+	-<currentLocation> = X|Y where X and Y are of type "int" - The current location of the moving unit
+	-<desiredDestination> = X|Y where X and Y are of type "int" - The location to which the identified unit is moving
+
+ATTACK|<attackerLocation>|<defenderLocation>|<defenderHPLoss>|<attackerHPLoss>
+	-Informs receiving client that a unit has attacked another unit on the other client's map
+	-<attackerLocation> = X|Y where X and Y are of type "int" - The location of the attacking unit
+	-<defenderLocation> = X|Y where X and Y are of type "int" - The location of the defending unit
+	-<defenderHPLoss> = X where X is of type "int" - The amount by which the defender's HP decreased
+	-<attackerHPLoss> = X where X is of type "int" - The amount by which the attacker's HP decreased
+
+TURN_END
+	-Informs client that the current player's turn has ended
+
+
+
+			---Undetermined Commands---
+
+Map selection
+Level-ups during game
+Equipment
